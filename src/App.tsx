@@ -1,13 +1,20 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { 
+  FiUsers, FiTrendingUp, FiAward, FiStar, FiMapPin,
+  FiZap, FiMoon, FiAlertCircle, FiSearch,
+  FiShield, FiBarChart2, FiTarget, FiClock,
+  FiPhone, FiMail
+} from 'react-icons/fi';
 import './App.css';
 import { designTokens as T } from './constants/designTokens';
 import { useScrollReveal } from './hooks/useScrollReveal';
+import { useCounterAnimation } from './hooks/useCounterAnimation';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { SEOMeta } from './components/SEOMeta';
 
 /* ─── Hero ───────────────────────────────────────────────────────────── */
-function Hero({ onBook }) {
+function Hero({ onBook }: { onBook: () => void }) {
   return (
     <section
       id="hero"
@@ -17,7 +24,7 @@ function Hero({ onBook }) {
         paddingTop: 70,
         background: `linear-gradient(160deg, ${T.green50} 0%, ${T.white} 50%, ${T.cream} 100%)`,
         display: 'flex', alignItems: 'center',
-        position: 'relative', overflow: 'hidden',
+        position: 'relative', overflow: 'hidden', width: '100vw'
       }}
     >
       {/* Decorative blobs */}
@@ -62,12 +69,12 @@ function Hero({ onBook }) {
             {/* Trust badges */}
             <div className="reveal d4" style={{ display: 'flex', gap: 24, marginTop: 40, flexWrap: 'wrap' }}>
               {[
-                { icon: '🩺', label: 'Physician-Led Care' },
-                { icon: '🔬', label: 'Advanced Testing' },
-                { icon: '📊', label: 'Data-Driven Protocols' },
+                { icon: FiShield, label: 'Physician-Led Care' },
+                { icon: FiSearch, label: 'Advanced Testing' },
+                { icon: FiBarChart2, label: 'Data-Driven Protocols' },
               ].map(b => (
                 <div key={b.label} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <span style={{ fontSize: 18 }}>{b.icon}</span>
+                  <b.icon size={20} style={{ color: T.green600 }} />
                   <span style={{ fontSize: 13, color: T.gray500, fontWeight: 500 }}>{b.label}</span>
                 </div>
               ))}
@@ -97,7 +104,7 @@ function Hero({ onBook }) {
                 display: 'flex', alignItems: 'center', gap: 10,
               }}>
                 <div style={{ width: 36, height: 36, borderRadius: '50%', background: T.green100, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={T.green600} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                  <FiTrendingUp size={18} color={T.green600} />
                 </div>
                 <div>
                   <div style={{ fontSize: 11, color: T.gray500, fontWeight: 500 }}>Optimization Score</div>
@@ -140,11 +147,11 @@ function Hero({ onBook }) {
 /* ─── Problem Strip ──────────────────────────────────────────────────── */
 function ProblemStrip() {
   const symptoms = [
-    { icon: '⚡', label: 'Low Energy' },
-    { icon: '⚖️', label: 'Stubborn Weight' },
-    { icon: '😴', label: 'Poor Sleep' },
-    { icon: '😰', label: 'High Stress' },
-    { icon: '🔍', label: 'Hidden Health Risks' },
+    { icon: FiZap, label: 'Low Energy' },
+    { icon: FiTarget, label: 'Stubborn Weight' },
+    { icon: FiMoon, label: 'Poor Sleep' },
+    { icon: FiAlertCircle, label: 'High Stress' },
+    { icon: FiSearch, label: 'Hidden Health Risks' },
   ];
   return (
     <section style={{ background: T.green900, padding: '40px 24px' }} aria-label="Common health problems we address">
@@ -155,7 +162,7 @@ function ProblemStrip() {
         <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(24px, 4vw, 60px)', flexWrap: 'wrap' }}>
           {symptoms.map((s, i) => (
             <div key={s.label} className={`reveal d${i + 1}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-              <span style={{ fontSize: 28 }}>{s.icon}</span>
+              <s.icon size={28} color={'rgba(255,255,255,0.7)'} />
               <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', fontWeight: 500 }}>{s.label}</span>
             </div>
           ))}
@@ -170,25 +177,60 @@ function ProblemStrip() {
 
 /* ─── Stats Bar ──────────────────────────────────────────────────────── */
 function StatsBar() {
+  const [inView, setInView] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
   const stats = [
-    { value: '2,400+', label: 'Members Optimized', icon: '👥' },
-    { value: '8+', label: 'Years of Excellence', icon: '🏆' },
-    { value: '15+', label: 'Specialist Physicians', icon: '🩺' },
-    { value: '94%', label: 'Member Satisfaction', icon: '⭐' },
-    { value: '3', label: 'Lagos Locations', icon: '📍' },
+    { value: '2400', label: 'Members Optimized', icon: FiUsers },
+    { value: '8', label: 'Years of Excellence', icon: FiAward },
+    { value: '15', label: 'Specialist Physicians', icon: FiShield },
+    { value: '94', label: 'Member Satisfaction', icon: FiStar, suffix: '%' },
+    { value: '3', label: 'Lagos Locations', icon: FiMapPin },
   ];
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section style={{ background: T.green50, padding: '60px 24px', borderTop: `1px solid ${T.green100}`, borderBottom: `1px solid ${T.green100}` }} aria-label="MedLYFE statistics">
+    <section ref={sectionRef} style={{ background: T.green50, padding: '60px 24px', borderTop: `1px solid ${T.green100}`, borderBottom: `1px solid ${T.green100}` }} aria-label="MedLYFE statistics">
       <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap', gap: 32 }}>
         {stats.map((s, i) => (
-          <div key={s.label} className={`reveal d${i + 1}`} style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: 28, marginBottom: 4 }}>{s.icon}</div>
-            <div style={{ fontFamily: 'Fraunces, serif', fontSize: 'clamp(28px, 3.5vw, 42px)', fontWeight: 700, color: T.green700 }}>{s.value}</div>
-            <div style={{ fontSize: 13, color: T.gray500, fontWeight: 500, marginTop: 4 }}>{s.label}</div>
-          </div>
+          <StatCard key={s.label} stat={s} delay={i} inView={inView} />
         ))}
       </div>
     </section>
+  );
+}
+
+interface Stat {
+  value: string;
+  label: string;
+  icon: React.ComponentType<{ size?: number; color?: string }>;
+  suffix?: string;
+}
+
+function StatCard({ stat, delay, inView }: { stat: Stat; delay: number; inView: boolean }) {
+  const displayValue = useCounterAnimation(`${stat.value}${stat.suffix || ''}`, inView);
+
+  return (
+    <div key={stat.label} className={`reveal d${delay + 1}`} style={{ textAlign: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 12 }}>
+        <stat.icon size={28} color={T.green600} />
+      </div>
+      <div style={{ fontFamily: 'Fraunces, serif', fontSize: 'clamp(28px, 3.5vw, 42px)', fontWeight: 700, color: T.green700 }}>{displayValue}</div>
+      <div style={{ fontSize: 13, color: T.gray500, fontWeight: 500, marginTop: 4 }}>{stat.label}</div>
+    </div>
   );
 }
 
@@ -358,13 +400,13 @@ function Services() {
 }
 
 /* ─── Why MedLYFE ────────────────────────────────────────────────────── */
-function WhyMedLYFE({ onBook }) {
+function WhyMedLYFE({ onBook }: { onBook: () => void }) {
   const pillars = [
-    { icon: '🩺', title: 'Physician-Led Care', desc: 'Every program is designed and overseen by qualified, specialist physicians — not just wellness coaches.' },
-    { icon: '📊', title: 'Data-Driven Decisions', desc: 'We test first, then act. Your biomarkers guide every recommendation we make.' },
-    { icon: '🎯', title: 'Personalised Protocols', desc: 'No one-size-fits-all plans. Every protocol is tailored to your unique biology and goals.' },
-    { icon: '✨', title: 'Premium Experience', desc: 'From your first consult to ongoing support, every touchpoint is crafted for excellence.' },
-    { icon: '🏅', title: 'Built for High Performers', desc: 'We serve professionals, athletes, and executives who demand the best from their bodies.' },
+    { icon: FiShield, title: 'Physician-Led Care', desc: 'Every program is designed and overseen by qualified, specialist physicians — not just wellness coaches.' },
+    { icon: FiBarChart2, title: 'Data-Driven Decisions', desc: 'We test first, then act. Your biomarkers guide every recommendation we make.' },
+    { icon: FiTarget, title: 'Personalised Protocols', desc: 'No one-size-fits-all plans. Every protocol is tailored to your unique biology and goals.' },
+    { icon: FiStar, title: 'Premium Experience', desc: 'From your first consult to ongoing support, every touchpoint is crafted for excellence.' },
+    { icon: FiAward, title: 'Built for High Performers', desc: 'We serve professionals, athletes, and executives who demand the best from their bodies.' },
   ];
 
   return (
@@ -403,7 +445,9 @@ function WhyMedLYFE({ onBook }) {
               border: `1px solid ${T.green100}`,
               borderRadius: 20, padding: '28px 24px',
             }}>
-              <div style={{ fontSize: 32, marginBottom: 12 }}>{p.icon}</div>
+              <div style={{ marginBottom: 12 }}>
+                <p.icon size={32} color={T.green600} />
+              </div>
               <div style={{ fontFamily: 'Fraunces, serif', fontSize: 18, fontWeight: 600, color: T.green900, marginBottom: 8 }}>{p.title}</div>
               <div style={{ fontSize: 14, color: T.gray500, lineHeight: 1.7 }}>{p.desc}</div>
             </div>
@@ -528,7 +572,7 @@ function DownloadBrochure() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', interest: '', goal: '' });
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
   };
@@ -658,8 +702,15 @@ function Locations() {
               Visit one of our premium wellness centres across Lagos, or let us come to you. For select members, MedLYFE offers home visits, corporate wellness sessions, and concierge health management.
             </p>
             <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
-              {['🏠 Home Visits', '🏢 Corporate Wellness', '🩺 Concierge Care'].map(s => (
-                <div key={s} style={{ fontSize: 14, color: T.green700, fontWeight: 500 }}>{s}</div>
+              {[
+                { icon: FiMapPin, text: 'Home Visits' },
+                { icon: FiTarget, text: 'Corporate Wellness' },
+                { icon: FiShield, text: 'Concierge Care' }
+              ].map(s => (
+                <div key={s.text} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 14, color: T.green700, fontWeight: 500 }}>
+                  <s.icon size={16} />
+                  {s.text}
+                </div>
               ))}
             </div>
           </div>
@@ -685,7 +736,7 @@ function Locations() {
                 <div style={{ fontSize: 11, color: T.green600, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 6 }}>{l.tag}</div>
                 <div style={{ fontFamily: 'Fraunces, serif', fontSize: 22, fontWeight: 600, color: T.green900, marginBottom: 8 }}>{l.name}</div>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}>
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke={T.gray500} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginTop: 2, flexShrink: 0 }}><path d="M7 1C4.24 1 2 3.24 2 6c0 3.75 5 7 5 7s5-3.25 5-7c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 117 4a1.5 1.5 0 010 3z"/></svg>
+                  <FiMapPin size={14} style={{ marginTop: 2, flexShrink: 0, color: T.gray500 }} />
                   <span style={{ fontSize: 13, color: T.gray500, lineHeight: 1.5 }}>{l.address}</span>
                 </div>
               </div>
@@ -702,7 +753,7 @@ function Contact() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
   const [sent, setSent] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSent(true);
   };
@@ -720,12 +771,14 @@ function Contact() {
           </p>
           <div className="reveal d3" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             {[
-              { icon: '📞', label: 'Phone', value: '+234 000 000 0000' },
-              { icon: '📧', label: 'Email', value: 'hello@medlyfe.com' },
-              { icon: '🕒', label: 'Hours', value: 'Mon–Sat: 8am – 7pm' },
+              { icon: FiPhone, label: 'Phone', value: '+234 000 000 0000' },
+              { icon: FiMail, label: 'Email', value: 'hello@medlyfe.com' },
+              { icon: FiClock, label: 'Hours', value: 'Mon–Sat: 8am – 7pm' },
             ].map(c => (
               <div key={c.label} style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                <div style={{ width: 44, height: 44, borderRadius: 12, background: T.green100, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>{c.icon}</div>
+                <div style={{ width: 44, height: 44, borderRadius: 12, background: T.green100, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <c.icon size={20} color={T.green600} />
+                </div>
                 <div>
                   <div style={{ fontSize: 12, color: T.gray500, fontWeight: 500 }}>{c.label}</div>
                   <div style={{ fontSize: 15, color: T.gray900, fontWeight: 500 }}>{c.value}</div>
@@ -775,12 +828,12 @@ function Contact() {
 
 
 /* ─── Booking Modal ──────────────────────────────────────────────────── */
-function BookingModal({ open, onClose }) {
+function BookingModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [step, setStep] = useState(1);
   const [form, setForm] = useState({ name: '', email: '', phone: '', service: '', date: '', goal: '' });
   const [done, setDone] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (step === 1) { setStep(2); return; }
     setDone(true);
@@ -788,7 +841,7 @@ function BookingModal({ open, onClose }) {
 
   useEffect(() => {
     if (!open) { setTimeout(() => { setStep(1); setDone(false); setForm({ name: '', email: '', phone: '', service: '', date: '', goal: '' }); }, 400); }
-    const handler = (e) => { if (e.key === 'Escape') onClose(); };
+    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     document.addEventListener('keydown', handler);
     return () => document.removeEventListener('keydown', handler);
   }, [open, onClose]);
