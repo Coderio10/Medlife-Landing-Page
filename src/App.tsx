@@ -24,15 +24,15 @@ function Hero({ onBook }: { onBook: () => void }) {
         paddingTop: 70,
         background: `linear-gradient(160deg, ${T.green50} 0%, ${T.white} 50%, ${T.cream} 100%)`,
         display: 'flex', alignItems: 'center',
-        position: 'relative', overflow: 'hidden', width: '100vw'
+        position: 'relative', overflow: 'hidden', width: '100%', textAlign: 'left'
       }}
     >
       {/* Decorative blobs */}
       <div style={{ position: 'absolute', top: -100, right: -100, width: 500, height: 500, borderRadius: '50%', background: `radial-gradient(circle, ${T.green100} 0%, transparent 70%)`, pointerEvents: 'none' }} />
       <div style={{ position: 'absolute', bottom: -80, left: -80, width: 380, height: 380, borderRadius: '50%', background: `radial-gradient(circle, rgba(90,184,130,0.12) 0%, transparent 70%)`, pointerEvents: 'none' }} />
 
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 24px', width: '100%' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
+      <div className="section-container hero-container" style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 24px', width: '100%' }}>
+        <div className="responsive-grid hero-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
           {/* Left */}
           <div>
             <div className="reveal section-label">
@@ -47,6 +47,7 @@ function Hero({ onBook }: { onBook: () => void }) {
               color: T.green900,
               letterSpacing: '-0.02em',
               marginBottom: 24,
+              
             }}>
               Don't Wait to{' '}
               <span style={{ color: T.green600, fontStyle: 'italic' }}>Break.</span>
@@ -57,7 +58,7 @@ function Hero({ onBook }: { onBook: () => void }) {
             <p className="reveal d2" style={{ fontSize: 18, color: T.gray500, lineHeight: 1.7, marginBottom: 36, maxWidth: 480 }}>
               Physician-led programs, advanced diagnostics, and recovery technology — designed to help you perform at your best, now and for the long term.
             </p>
-            <div className="reveal d3" style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
+            <div className="reveal d3 hero-actions" style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
               <button className="btn-primary" onClick={onBook} style={{ fontSize: 16, padding: '16px 32px' }}>
                 Book a Consultation
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -67,7 +68,7 @@ function Hero({ onBook }: { onBook: () => void }) {
               </a>
             </div>
             {/* Trust badges */}
-            <div className="reveal d4" style={{ display: 'flex', gap: 24, marginTop: 40, flexWrap: 'wrap' }}>
+            <div className="reveal d4 hero-badges" style={{ display: 'flex', gap: 24, marginTop: 40, flexWrap: 'wrap' }}>
               {[
                 { icon: FiShield, label: 'Physician-Led Care' },
                 { icon: FiSearch, label: 'Advanced Testing' },
@@ -155,7 +156,7 @@ function ProblemStrip() {
   ];
   return (
     <section style={{ background: T.green900, padding: '40px 24px' }} aria-label="Common health problems we address">
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+      <div className="section-container" style={{ maxWidth: 1200, margin: '0 auto' }}>
         <p className="reveal" style={{ textAlign: 'center', color: 'rgba(255,255,255,0.55)', fontSize: 13, fontWeight: 500, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 28 }}>
           You're doing well… but your body isn't where it should be
         </p>
@@ -204,7 +205,7 @@ function StatsBar() {
 
   return (
     <section ref={sectionRef} style={{ background: T.green50, padding: '60px 24px', borderTop: `1px solid ${T.green100}`, borderBottom: `1px solid ${T.green100}` }} aria-label="MedLYFE statistics">
-      <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap', gap: 32 }}>
+      <div className="section-container stats-grid" style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap', gap: 32 }}>
         {stats.map((s, i) => (
           <StatCard key={s.label} stat={s} delay={i} inView={inView} />
         ))}
@@ -238,7 +239,7 @@ function StatCard({ stat, delay, inView }: { stat: Stat; delay: number; inView: 
 function About() {
   return (
     <section style={{ padding: '100px 24px', background: T.white }} aria-label="About MedLYFE">
-      <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
+      <div className="section-container responsive-grid about-grid" style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
         {/* Image */}
         <div className="reveal-left" style={{ position: 'relative' }}>
           <div style={{ borderRadius: 28, overflow: 'hidden', height: 480, boxShadow: '0 24px 64px rgba(13,43,31,0.12)' }}>
@@ -254,14 +255,14 @@ function About() {
             position: 'absolute', bottom: -24, right: -24,
             background: T.green600, borderRadius: 20, padding: '20px 24px',
             boxShadow: '0 12px 36px rgba(39,117,76,0.3)',
-            maxWidth: 200,
+            maxWidth: 200, 
           }}>
             <div style={{ fontFamily: 'Fraunces, serif', fontSize: 32, fontWeight: 700, color: T.white }}>12+</div>
             <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.75)', marginTop: 2 }}>Specialized health programs tailored for you</div>
           </div>
         </div>
         {/* Text */}
-        <div>
+        <div style={{ textAlign: 'left' }}>
           <div className="reveal section-label">About MedLYFE</div>
           <h2 className="reveal d1" style={{ fontFamily: 'Fraunces, serif', fontSize: 'clamp(32px, 3.5vw, 48px)', fontWeight: 600, color: T.green900, lineHeight: 1.15, marginBottom: 20, letterSpacing: '-0.01em' }}>
             A Premium Health Optimization, Wellness & Longevity Centre
@@ -279,9 +280,7 @@ function About() {
 }
 
 /* ─── Services Accordion ─────────────────────────────────────────────── */
-function Services() {
-  const [open, setOpen] = useState(0);
-
+function Services({ onBook }: { onBook: () => void }) {
   const services = [
     {
       title: 'Optimization Programs',
@@ -289,7 +288,6 @@ function Services() {
       img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&q=80',
       imgAlt: 'Health optimization program consultation',
       body: 'Our physician-designed optimization programs combine metabolic assessment, hormonal profiling, nutrition protocols, and movement planning. Each program is built around your unique biomarkers and lifestyle goals — delivering measurable improvements in energy, weight, mental clarity, and longevity.',
-      features: ['Metabolic & hormonal assessment', 'Personalised nutrition protocols', 'Performance & movement planning', '90-day transformation roadmap'],
     },
     {
       title: 'Recovery & Longevity Technology',
@@ -297,7 +295,6 @@ function Services() {
       img: 'https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=500&q=80',
       imgAlt: 'Advanced recovery and longevity therapy',
       body: 'Access cutting-edge recovery modalities including IV therapy, hyperbaric oxygen, red light therapy, cryotherapy, and more. Our longevity protocols are designed to accelerate cellular repair, reduce inflammation, and extend your healthy years.',
-      features: ['IV nutrient therapy', 'Hyperbaric oxygen therapy', 'Red light & photobiomodulation', 'Cold & heat therapy protocols'],
     },
     {
       title: 'Advanced Health Testing',
@@ -305,7 +302,6 @@ function Services() {
       img: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=500&q=80',
       imgAlt: 'Advanced laboratory health testing',
       body: 'We go far beyond standard GP bloodwork. Our comprehensive panels include advanced cardiometabolic markers, gut microbiome analysis, heavy metal testing, genetic profiling, and full hormone panels — giving you a 360° picture of your internal health.',
-      features: ['Comprehensive blood biomarker panels', 'Gut microbiome & food sensitivity', 'Genetic & DNA profiling', 'Hormonal & thyroid deep-dive'],
     },
     {
       title: 'Wellness & Longevity Products',
@@ -313,13 +309,12 @@ function Services() {
       img: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=500&q=80',
       imgAlt: 'Premium wellness and longevity supplements',
       body: 'Our curated range of pharmaceutical-grade supplements, nutraceuticals, and wellness products is recommended exclusively on the basis of your test results. No guesswork — only what your body actually needs.',
-      features: ['Physician-recommended supplements', 'Pharmaceutical-grade nutraceuticals', 'Personalised stack based on your labs', 'Monthly supply management'],
     },
   ];
 
   return (
     <section id="services" style={{ padding: '100px 24px', background: T.cream }} aria-label="MedLYFE services">
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+      <div className="section-container" style={{ maxWidth: 1200, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 60 }}>
           <div className="reveal section-label" style={{ display: 'inline-flex' }}>Our Services</div>
           <h2 className="reveal d1" style={{ fontFamily: 'Fraunces, serif', fontSize: 'clamp(32px, 3.5vw, 48px)', fontWeight: 600, color: T.green900, letterSpacing: '-0.01em' }}>
@@ -327,71 +322,27 @@ function Services() {
           </h2>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <div className="services-grid">
           {services.map((s, i) => (
-            <div
+            <button
               key={s.title}
-              className={`reveal d${i + 1} card-lift`}
-              style={{
-                background: T.white,
-                borderRadius: 20,
-                overflow: 'hidden',
-                border: open === i ? `1.5px solid ${T.green400}` : `1px solid ${T.gray100}`,
-                transition: 'border-color 0.2s',
-              }}
+              type="button"
+              onClick={onBook}
+              className={`reveal d${i + 1} service-image-card card-lift`}
+              aria-label={`Book an appointment for ${s.title}`}
             >
-              {/* Header */}
-              <button
-                onClick={() => setOpen(open === i ? -1 : i)}
-                style={{
-                  width: '100%', padding: '24px 28px',
-                  display: 'flex', alignItems: 'center', gap: 20,
-                  background: 'none', border: 'none', cursor: 'pointer',
-                  textAlign: 'left',
-                }}
-                aria-expanded={open === i}
-                aria-controls={`service-body-${i}`}
-              >
-                <div style={{ width: 56, height: 56, borderRadius: 14, overflow: 'hidden', flexShrink: 0 }}>
-                  <img src={s.img} alt={s.imgAlt} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: 'Fraunces, serif', fontSize: 20, fontWeight: 600, color: T.green900 }}>{s.title}</div>
-                  <div style={{ fontSize: 14, color: T.gray500, marginTop: 2 }}>{s.subtitle}</div>
-                </div>
-                <div style={{
-                  width: 32, height: 32, borderRadius: '50%',
-                  background: open === i ? T.green600 : T.green100,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  flexShrink: 0,
-                  transition: 'background 0.2s, transform 0.3s',
-                  transform: open === i ? 'rotate(180deg)' : 'none',
-                }}>
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke={open === i ? T.white : T.green700} strokeWidth="2" strokeLinecap="round"><path d="M2 5l5 5 5-5"/></svg>
-                </div>
-              </button>
-              {/* Body */}
-              <div id={`service-body-${i}`} className={`accordion-content ${open === i ? 'open' : ''}`}>
-                <div style={{ padding: '0 28px 28px', display: 'grid', gridTemplateColumns: '1fr auto', gap: 32, alignItems: 'start' }}>
-                  <div>
-                    <p style={{ fontSize: 15, color: T.gray500, lineHeight: 1.75, marginBottom: 20 }}>{s.body}</p>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                      {s.features.map(f => (
-                        <div key={f} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                          <div style={{ width: 20, height: 20, borderRadius: '50%', background: T.green100, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke={T.green600} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 5l2 2 4-4"/></svg>
-                          </div>
-                          <span style={{ fontSize: 14, color: T.gray700 }}>{f}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="hide-mobile" style={{ width: 160, height: 140, borderRadius: 16, overflow: 'hidden', flexShrink: 0 }}>
-                    <img src={s.img} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  </div>
-                </div>
-              </div>
-            </div>
+              <img src={s.img} alt={s.imgAlt} loading="lazy" />
+              <span className="service-card-overlay" aria-hidden="true" />
+              <span className="service-card-content">
+                <span className="service-card-kicker">MedLYFE Service</span>
+                <span className="service-card-title">{s.title}</span>
+                <span className="service-card-desc">{s.subtitle}</span>
+                <span className="service-card-cta">
+                  Book appointment
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                </span>
+              </span>
+            </button>
           ))}
         </div>
       </div>
@@ -410,10 +361,10 @@ function WhyMedLYFE({ onBook }: { onBook: () => void }) {
   ];
 
   return (
-    <section id="why" style={{ padding: '100px 24px', background: T.white }} aria-label="Why choose MedLYFE">
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+    <section id="why" style={{ padding: '100px 24px', background: T.white, textAlign: 'left' }} aria-label="Why choose MedLYFE">
+      <div className="section-container" style={{ maxWidth: 1200, margin: '0 auto' }}>
         {/* Top: image + text */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center', marginBottom: 80 }}>
+        <div className="responsive-grid why-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center', marginBottom: 80 }}>
           <div>
             <div className="reveal section-label">Why MedLYFE</div>
             <h2 className="reveal d1" style={{ fontFamily: 'Fraunces, serif', fontSize: 'clamp(32px, 3.5vw, 48px)', fontWeight: 600, color: T.green900, lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: 20 }}>
@@ -438,7 +389,7 @@ function WhyMedLYFE({ onBook }: { onBook: () => void }) {
         </div>
 
         {/* Pillars grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 20 }}>
+        <div className="pillars-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 20 }}>
           {pillars.map((p, i) => (
             <div key={p.title} className={`reveal d${i + 1} card-lift`} style={{
               background: i % 2 === 0 ? T.green50 : T.white,
@@ -492,48 +443,45 @@ function Testimonials() {
     },
   ];
 
-  const prev = () => setIdx(i => (i - 1 + testimonials.length) % testimonials.length);
-  const next = () => setIdx(i => (i + 1) % testimonials.length);
-
-  const t = testimonials[idx];
+  const pageCount = Math.ceil(testimonials.length / 2);
+  const prev = () => setIdx(i => (i - 1 + pageCount) % pageCount);
+  const next = () => setIdx(i => (i + 1) % pageCount);
+  const visibleTestimonials = testimonials.slice(idx * 2, idx * 2 + 2);
 
   return (
     <section id="testimonials" style={{ padding: '100px 24px', background: T.green900, position: 'relative', overflow: 'hidden' }} aria-label="Client testimonials">
       {/* Decoration */}
       <div style={{ position: 'absolute', top: -80, right: -80, width: 400, height: 400, borderRadius: '50%', background: `radial-gradient(circle, rgba(90,184,130,0.12) 0%, transparent 70%)`, pointerEvents: 'none' }} />
 
-      <div style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
+      <div className="section-container" style={{ maxWidth: 1100, margin: '0 auto', textAlign: 'center' }}>
         <div className="reveal section-label" style={{ background: 'rgba(90,184,130,0.15)', color: T.green400, display: 'inline-flex' }}>Member Stories</div>
         <h2 className="reveal d1" style={{ fontFamily: 'Fraunces, serif', fontSize: 'clamp(28px, 3vw, 42px)', fontWeight: 600, color: T.white, letterSpacing: '-0.01em', marginBottom: 56 }}>
           Real People. <span style={{ color: T.green400, fontStyle: 'italic' }}>Real Transformations.</span>
         </h2>
 
-        {/* Card */}
-        <div className="reveal d2" style={{
-          background: 'rgba(255,255,255,0.05)',
-          backdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255,255,255,0.10)',
-          borderRadius: 28, padding: '48px 40px',
-          position: 'relative',
-        }}>
-          <div style={{ fontSize: 64, color: T.green500, fontFamily: 'Fraunces, serif', lineHeight: 0.8, marginBottom: 20, opacity: 0.6 }}>"</div>
-          <p style={{ fontFamily: 'Fraunces, serif', fontSize: 'clamp(17px, 2vw, 22px)', color: 'rgba(255,255,255,0.90)', lineHeight: 1.65, fontStyle: 'italic', marginBottom: 32 }}>
-            {t.quote}
-          </p>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14 }}>
-            <div style={{ width: 52, height: 52, borderRadius: '50%', overflow: 'hidden', border: `2px solid ${T.green500}` }}>
-              <img src={t.img} alt={t.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
+        <div className="testimonial-grid reveal d2">
+          {visibleTestimonials.map(t => (
+            <div key={t.name} className="testimonial-card">
+              <div style={{ fontSize: 54, color: T.green500, fontFamily: 'Fraunces, serif', lineHeight: 0.8, marginBottom: 18, opacity: 0.6 }}>"</div>
+              <p style={{ fontFamily: 'Fraunces, serif', fontSize: 'clamp(16px, 1.6vw, 20px)', color: 'rgba(255,255,255,0.90)', lineHeight: 1.65, fontStyle: 'italic', marginBottom: 28 }}>
+                {t.quote}
+              </p>
+              <div className="testimonial-person">
+                <div style={{ width: 52, height: 52, borderRadius: '50%', overflow: 'hidden', border: `2px solid ${T.green500}`, flexShrink: 0 }}>
+                  <img src={t.img} alt={t.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
+                </div>
+                <div style={{ textAlign: 'left', minWidth: 0 }}>
+                  <div style={{ fontWeight: 600, color: T.white, fontSize: 15 }}>{t.name}</div>
+                  <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)' }}>{t.role}</div>
+                </div>
+                <div className="testimonial-stars">
+                  {Array(t.stars).fill(0).map((_, j) => (
+                    <svg key={j} width="16" height="16" viewBox="0 0 16 16" fill={T.green400}><path d="M8 1l1.85 3.75L14 5.5l-3 2.92.71 4.12L8 10.5l-3.71 1.95.71-4.12L2 5.5l4.15-.75L8 1z"/></svg>
+                  ))}
+                </div>
+              </div>
             </div>
-            <div style={{ textAlign: 'left' }}>
-              <div style={{ fontWeight: 600, color: T.white, fontSize: 15 }}>{t.name}</div>
-              <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)' }}>{t.role}</div>
-            </div>
-            <div style={{ marginLeft: 8, display: 'flex', gap: 2 }}>
-              {Array(t.stars).fill(0).map((_, j) => (
-                <svg key={j} width="16" height="16" viewBox="0 0 16 16" fill={T.green400}><path d="M8 1l1.85 3.75L14 5.5l-3 2.92.71 4.12L8 10.5l-3.71 1.95.71-4.12L2 5.5l4.15-.75L8 1z"/></svg>
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* Controls */}
@@ -545,8 +493,8 @@ function Testimonials() {
           }}>
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="2" strokeLinecap="round"><path d="M11 4l-5 5 5 5"/></svg>
           </button>
-          {testimonials.map((_, i) => (
-            <button key={i} onClick={() => setIdx(i)} aria-label={`Go to testimonial ${i + 1}`} style={{
+          {Array.from({ length: pageCount }).map((_, i) => (
+            <button key={i} onClick={() => setIdx(i)} aria-label={`Go to testimonial page ${i + 1}`} style={{
               width: i === idx ? 28 : 8, height: 8, borderRadius: 4,
               background: i === idx ? T.green400 : 'rgba(255,255,255,0.25)',
               border: 'none', cursor: 'pointer',
@@ -578,8 +526,8 @@ function DownloadBrochure() {
   };
 
   return (
-    <section id="brochure" style={{ padding: '100px 24px', background: T.green50 }} aria-label="Download MedLYFE brochure">
-      <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
+    <section id="brochure" style={{ padding: '100px 24px', background: T.green50, textAlign: 'left' }} aria-label="Download MedLYFE brochure">
+      <div className="section-container responsive-grid brochure-grid" style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
         {/* Left */}
         <div>
           <div className="reveal section-label">Get Started</div>
@@ -607,7 +555,7 @@ function DownloadBrochure() {
           ) : (
             <form onSubmit={handleSubmit} aria-label="Brochure download form">
               <h3 style={{ fontFamily: 'Fraunces, serif', fontSize: 22, color: T.green900, marginBottom: 24 }}>Tell us about yourself</h3>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+              <div className="form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                 <div className="form-group" style={{ gridColumn: '1/-1' }}>
                   <label className="form-label" htmlFor="b-interest">Area of Interest *</label>
                   <select id="b-interest" className="form-input" required value={form.interest} onChange={e => setForm({ ...form, interest: e.target.value })}>
@@ -688,16 +636,16 @@ function Locations() {
   ];
 
   return (
-    <section id="locations" style={{ padding: '100px 24px', background: T.white }} aria-label="MedLYFE Lagos locations">
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'start', marginBottom: 56 }}>
+    <section id="locations" style={{ padding: '100px 24px', background: T.white, textAlign: 'left' }} aria-label="MedLYFE Lagos locations">
+      <div className="section-container" style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr', alignItems: 'start', marginBottom: 56 }}>
           <div>
             <div className="reveal section-label">Visit Us</div>
             <h2 className="reveal d1" style={{ fontFamily: 'Fraunces, serif', fontSize: 'clamp(32px, 3.5vw, 48px)', fontWeight: 600, color: T.green900, lineHeight: 1.15, letterSpacing: '-0.01em' }}>
               We Come <span style={{ color: T.green600, fontStyle: 'italic' }}>To You</span> Too
             </h2>
           </div>
-          <div className="reveal d2" style={{ paddingTop: 8 }}>
+          <div className="reveal d2 locations-copy" style={{ maxWidth: '50%' }}>
             <p style={{ fontSize: 16, color: T.gray500, lineHeight: 1.75, marginBottom: 16 }}>
               Visit one of our premium wellness centres across Lagos, or let us come to you. For select members, MedLYFE offers home visits, corporate wellness sessions, and concierge health management.
             </p>
@@ -716,7 +664,7 @@ function Locations() {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
+        <div className="locations-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
           {locs.map((l, i) => (
             <div key={l.name} className={`reveal d${i + 1} card-lift`} style={{
               borderRadius: 22, overflow: 'hidden',
@@ -760,7 +708,7 @@ function Contact() {
 
   return (
     <section id="contact" style={{ padding: '100px 24px', background: T.cream }} aria-label="Contact MedLYFE">
-      <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 72, alignItems: 'center' }}>
+      <div className="section-container responsive-grid contact-grid" style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 72, alignItems: 'center' }}>
         <div>
           <div className="reveal section-label">Get In Touch</div>
           <h2 className="reveal d1" style={{ fontFamily: 'Fraunces, serif', fontSize: 'clamp(30px, 3vw, 44px)', fontWeight: 600, color: T.green900, lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: 16 }}>
@@ -890,7 +838,7 @@ function BookingModal({ open, onClose }: { open: boolean; onClose: () => void })
             <form onSubmit={handleSubmit}>
               {step === 1 ? (
                 <>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                  <div className="form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                     <div className="form-group">
                       <label className="form-label" htmlFor="m-name">Full Name *</label>
                       <input id="m-name" className="form-input" required placeholder="Your name" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
@@ -977,7 +925,7 @@ export default function App() {
         <ProblemStrip />
         <StatsBar />
         <About />
-        <Services />
+        <Services onBook={openBook} />
         <WhyMedLYFE onBook={openBook} />
         <Testimonials />
         <DownloadBrochure />

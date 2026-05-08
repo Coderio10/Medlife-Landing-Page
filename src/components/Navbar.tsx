@@ -46,7 +46,7 @@ export function Navbar({ onBook }: NavbarProps) {
         }}
         role="navigation" aria-label="Main navigation"
       >
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px', height: 70, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div className="nav-inner" style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px', height: 70, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           {/* Logo */}
           <a href="#hero" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }} aria-label="MedLYFE Home">
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
@@ -81,8 +81,8 @@ export function Navbar({ onBook }: NavbarProps) {
               </svg>
               WhatsApp
             </a>
-            <button onClick={onBook} className="btn-primary" style={{ fontSize: 14 }}>Book Now</button>
-            <button onClick={() => setMenuOpen(!menuOpen)} className="nav-hamburger" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, display: 'none', flexDirection: 'column', gap: 5, alignItems: 'center' }}>
+            <button onClick={onBook} className="btn-primary nav-book-button" style={{ fontSize: 14 }}>Book Now</button>
+            <button onClick={() => setMenuOpen(!menuOpen)} className="nav-hamburger" aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, display: 'none', flexDirection: 'column', gap: 5, alignItems: 'center' }}>
               {menuOpen ? (
                 <FiX size={24} color={T.gray700} />
               ) : (
